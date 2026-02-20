@@ -1,0 +1,211 @@
++238
+Lines changed: 238 additions & 0 deletions
+Original file line number	Diff line number	Diff line change
+/*
+ * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
+ */
+package com.mycompany.lec05_33;
+/**
+ *
+ * @author sebastian
+ */
+public class Lec05 {
+    public static void main(String[] args) {
+        PilaArreglo pila = new PilaArreglo(4);
+        
+        pila.push(10);
+        pila.push(20);
+        pila.push(30);
+        pila.push(40);
+        
+        System.out.println("Desapilar " + pila.pop());
+        System.out.println("Desapilar " + pila.pop());
+        
+        System.out.println("Mostrar cima " + pila.peek());
+        
+        pila.push(220);
+        pila.push(40);
+        pila.push(99);
+        
+    }
+}
+/*
+ * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
+ * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
+ */
+package com.mycompany.lec05_33;
+/**
+ *
+ * @author sebastian
+ */
+public class PilaArreglo {
+    private int[] pila;
+    private int top;
+    private int maxSize;
+    
+    public PilaArreglo(int tamano){
+        maxSize = tamano;
+        pila = new int[maxSize];
+        top = -1;
+    }
+    
+    public void push(int elemento){
+        if(top == maxSize -1){
+            System.out.println("Desbordamiento");
+        } else {
+            pila[++top] =  elemento;        
+        }
+    }
+    
+    public int pop(){
+        if(top == -1){
+            System.out.println("Subdesbordamiento");
+            return -1;
+        } else {
+            return pila[top--];
+        }
+    }
+    
+    public int peek(){
+        if(top == -1){
+            System.out.println("La pila esta vacia");
+            return -1;
+        } else {
+            return pila[top];
+        }
+    }
+    
+    public boolean isEmpty(){
+        return top == -1;
+    }    
+    
+}
+/*
+ * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
+ * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
+ */
+package Dinamico;
+/**
+ *
+ * @author sebastian
+ */
+public class PilaDinamica {
+    private Nodo cima;
+    
+    public PilaDinamica(){
+        this.cima = null;
+    }
+    
+    public void push(int dato){
+        Nodo nuevoNodo = new Nodo(dato);
+        nuevoNodo.setSiguiente(cima);
+        cima = nuevoNodo;
+    }
+    
+    public int pop(){
+        if(cima == null){
+            System.out.println("Pila vacia");
+            return -1;
+        } 
+        int dato = cima.getDato();
+        cima = cima.getSiguiente();
+        return dato;
+    }
+    
+    public void mostrar(){
+        if(cima == null){
+            System.out.println("Pila vacia");
+            return;
+        }
+        Nodo actual = cima;
+        System.out.println("Contenido de pila");
+        while(actual != null){
+            System.out.println(actual.getDato());
+            actual = actual.getSiguiente();
+        }
+    }
+    
+    public int size(){
+        if(cima == null){
+            return 0;
+        }
+        Nodo actual = cima;
+        int contador = 0;
+        while(actual != null){
+            contador++;
+            actual = actual.getSiguiente();
+        }
+        return contador;
+    }
+    
+    
+}
+/*
+ * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
+ * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
+ */
+package Dinamico;
+/**
+ *
+ * @author sebastian
+ */
+public class Nodo {
+    private int dato;
+    private Nodo siguiente;
+    
+    public Nodo(int dato){
+        this.dato =dato;
+        this.siguiente = null;
+    }
+    public int getDato() {
+        return dato;
+    }
+    public void setDato(int dato) {
+        this.dato = dato;
+    }
+    public Nodo getSiguiente() {
+        return siguiente;
+    }
+    public void setSiguiente(Nodo siguiente) {
+        this.siguiente = siguiente;
+    }
+    
+    
+    
+}
+/*
+ * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
+ * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
+ */
+package Dinamico;
+/**
+ *
+ * @author sebastian
+ */
+public class Main {
+    public static void main(String[] args) {
+        PilaDinamica pila = new PilaDinamica();
+        
+        System.out.println("tamano:" + pila.size());
+        pila.push(10);
+        pila.push(-1);
+        pila.push(30);
+        
+        System.out.println("tamano:" + pila.size());
+        
+        System.out.println("Mostrar pila");
+        pila.mostrar();
+        
+        System.out.println("Desapilar: " + pila.pop());
+        System.out.println("Desapilar: " + pila.pop());
+        
+        System.out.println("Mostrar pila 2");
+        pila.mostrar();
+        System.out.println("tamano:" + pila.size());
+        
+        
+        System.out.println("Desapilar: " + pila.pop());
+        System.out.println("Desapilo de pila vacia");
+        System.out.println(pila.pop());
+    }
+}
