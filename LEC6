@@ -1,0 +1,131 @@
+package lec06;
+
+/**
+ *
+ * @author sebas
+ */
+public class Cola {
+     private Nodo frente;
+    private Nodo ultimo;
+    
+    public Cola(){
+        this.frente = null;
+        this.ultimo = null;
+    }
+    
+    public void encolar(int dato){
+        Nodo nuevo = new Nodo(dato);
+        if(ultimo != null){
+            ultimo.setSiguiente(nuevo);
+        }
+        ultimo = nuevo;
+        if(frente == null){
+            frente = nuevo;
+        }
+    }
+    
+    public int desencolar() throws Exception{
+        if(frente == null){
+            throw new Exception("Cola vacia");
+        }
+        int dato = frente.getDato();
+        frente = frente.getSiguiente();
+        if(frente == null){
+            ultimo = null;
+        }
+        return dato;
+    }
+    
+    public int frente() throws Exception{
+        if(frente == null){
+            throw new Exception("Cola vacia");
+        }
+        return frente.getDato();
+    }
+    
+    public boolean esVacia(){
+        return frente == null;
+    }
+}
+
+
+
+
+
+   package lec06;
+
+public class Lec06 {
+
+   
+    public static void main(String[] args) {
+        
+        try{
+            Cola cola = new Cola();
+            cola.encolar(10);
+            cola.encolar(20);
+            cola.encolar(30);
+            
+            System.out.println("Elem al frente: " + cola.frente()); //10
+            
+            System.out.println("Elem desencola: " + cola.desencolar()); //10
+            System.out.println("Elem al frente: " + cola.frente()); // 20
+            
+            cola.encolar(40);
+            
+            while(!cola.esVacia()){
+                System.out.println("Elem desencola: " + cola.desencolar());// 20 30 40
+            }
+            System.out.println("Elem desencola: " + cola.desencolar());
+        } catch (Exception e){
+            System.out.println(e.getMessage());
+        }
+    }
+}
+
+
+
+
+
+package lec06;
+
+/**
+ *
+ * @author sebas
+ */
+public class Nodo {
+    
+    private int dato;
+    private Nodo siguiente;
+    
+    public Nodo (int dato){
+        this.dato = dato;
+        this.siguiente = null;  
+    }
+
+    public int getDato() {
+        return dato;
+    }
+
+    public void setDato(int dato) {
+        this.dato = dato;
+    }
+
+    public Nodo getSiguiente() {
+        return siguiente;
+    }
+
+    public void setSiguiente(Nodo siguiente) {
+        this.siguiente = siguiente;
+    }
+      }
+    
+
+
+  
+    
+    
+
+    
+   
+    
+
