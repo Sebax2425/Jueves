@@ -1,0 +1,186 @@
+/*
+ * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
+ * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
+ */
+package com.sc303.lec04;
+
+/**
+ *
+ * @author Laboratorios
+ */
+public class Dato {
+    private int valor;
+    private Dato abajo;
+
+    public Dato(int valor) {
+        this.valor = valor;
+        this.abajo = null;
+    }
+
+    public int getValor() {
+        return valor;
+    }
+
+    public void setValor(int valor) {
+        this.valor = valor;
+    }
+
+    public Dato getAbajo() {
+        return abajo;
+    }
+
+    public void setAbajo(Dato abajo) {
+        this.abajo = abajo;
+    }
+    
+    
+    
+    
+}
+
+
+
+
+* Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
+ */
+
+package com.sc303.lec04;
+
+import java.util.Stack;
+
+/**
+ *
+ * @author Laboratorios
+ */
+public class Lec04 {
+
+    public static void main(String[] args) {
+        //Crear una pila
+        //Stack<Integer> pila = new Stack<>();
+        
+        //Agregar elementos
+        //pila.push(10);
+        //pila.push(20);
+        //pila.push(30);
+        
+        //Mostrat el elemento en el tope de la pila (peek/mostrar)
+        //System.out.println("Elemento n el tope de la pila: " + pila.peek()); // 30
+        
+        //Eliminar un elemento de la pila (pop/desapilar)
+        //System.out.println("Elemento eliminado: " + pila.pop()); //30
+        
+        //Mostrat el elemento en el tope de la pila (peek/mostrar)
+        //System.out.println("Elemento en el tope de la pila despues de eliminar: " + pila.peek());
+        // 20
+        
+        //Verificar si la pila esta vacia
+        //System.out.println("Esta vacia la pila: " + pila.isEmpty()); // false
+        
+        //Eliminar un elemento de la pila (pop/desapilar)
+        //System.out.println("Elemento eliminado: " + pila.pop()); //20
+        
+        //Eliminar un elemento de la pila (pop/desapilar)
+       //System.out.println("Elemento eliminado: " + pila.pop()); //10
+        
+        //Eliminar un elemento de la pila (pop/desapilar)
+       //System.out.println("Elemento eliminado: " + pila.pop()); //30
+
+    
+
+        Pila pila = new Pila();
+        
+        pila.apilar(10);
+        pila.apilar(20);
+        pila.apilar(30);
+        pila.apilar(40);
+        
+        System.out.println("Pila despues de apilar");
+        System.out.println(pila.mostrarPila()); // 40 30 20 10
+        
+        System.out.println("Elemento desapilado: " + pila.desapilar());//40
+        System.out.println("Pila despues de desapilar");
+        System.out.println(pila.mostrarPila()); // 30 20 10
+        
+        System.out.println("Elemento desapilado: " + pila.desapilar()); //30
+        System.out.println("Pila despues de desapilar");
+        System.out.println(pila.mostrarPila()); //20 10
+        
+        System.out.println("Elemento desapilado: " + pila.desapilar()); //30
+        System.out.println("Pila despues de desapilar");
+        System.out.println(pila.mostrarPila()); //20 10
+        
+        System.out.println("Elemento desapilado: " + pila.desapilar()); //30
+        System.out.println("Pila despues de desapilar");
+        System.out.println(pila.mostrarPila()); //20 10
+        
+        System.out.println("Elemento desapilado: " + pila.desapilar()); //30
+        System.out.println("Pila despues de desapilar");
+        System.out.println(pila.mostrarPila()); //20 10
+    }
+}
+
+
+
+
+
+
+/*
+ * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
+ * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
+ */
+package com.sc303.lec04;
+
+/**
+ *
+ * @author Laboratorios
+ */
+public class Pila {
+    private Dato cima;
+    
+    public Pila(){
+        this.cima = null;
+    }
+    
+    public boolean esVacia(){
+        return cima == null;
+    }
+    
+    //apilar
+    public void apilar(int valor){
+        Dato nuevoDato = new Dato(valor);
+        if(esVacia()){
+            cima = nuevoDato;
+        } else {
+            nuevoDato.setAbajo(cima);
+            cima = nuevoDato;
+        }
+    }
+    
+    //desapilar
+    public int desapilar(){
+        if(esVacia()){
+            System.out.println("Pila vacia");
+            return -1;
+        } else {
+            int valor = cima.getValor();
+            cima = cima.getAbajo();
+            return valor;
+        }
+    }
+    
+    public String mostrarPila(){
+        if(esVacia()){
+            return "Pila vacia";
+        }
+        StringBuilder sb = new StringBuilder();
+        Dato actual = cima;
+        while (actual != null){
+            sb.append(actual.getValor()).append(" ");
+            actual = actual.getAbajo();
+        }
+        return sb.toString().trim();        
+    }
+} 
+
+
+
