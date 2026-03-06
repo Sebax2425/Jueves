@@ -1,0 +1,169 @@
+ackage lec08;
+
+
+/**
+ *
+ * @author sebas
+ */
+public class Nodo {
+
+    private int dato;
+    private Nodo siguiente;
+
+    public Nodo(int dato) {
+        this.dato = dato;
+        this.siguiente = null;
+    }
+    
+
+    public int getDato() {
+        return dato;
+    }
+
+    public void setDato(int dato) {
+        this.dato = dato;
+    }
+
+    public Nodo getSiguiente() {
+        return siguiente;
+    }
+
+    public void setSiguiente(Nodo siguiente) {
+        this.siguiente = siguiente;
+    }
+
+}
+
+
+
+
+
+
+
+
+
+
+package lec08;
+
+/**
+ *
+ * @author sebas
+ */
+public class Lista {
+    private Nodo cabeza;
+
+    public Lista(Nodo cabeza) {
+        this.cabeza = null;
+    }
+
+    Lista() {
+        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+    }
+    public void insertarInicio(int valor){
+        Nodo nuevo = new Nodo(valor);
+        nuevo.setSiguiente(cabeza);
+        cabeza = nuevo;
+    }
+    
+    public void insertarOrdenado(int valor){
+        Nodo nuevo = new Nodo(valor);
+        
+        if(cabeza == null || cabeza.getDato()> valor){
+            nuevo.setSiguiente(cabeza);
+            cabeza = nuevo;
+            
+        } else{
+            Nodo actual = cabeza;
+            
+            while(actual.getSiguiente() != null
+                    && actual.getSiguiente().getDato() < valor){
+                actual = actual.getSiguiente();
+            }
+            nuevo.setSiguiente(actual.getSiguiente());
+            actual.setSiguiente(nuevo);
+        }
+                
+        
+    }
+    
+    public void eliminar(int valor){
+Nodo actual = cabeza;
+Nodo anterior = null;
+
+while(actual != null && actual.getDato() != valor){
+    anterior = actual;
+    actual = actual.getSiguiente();
+}
+
+
+if (actual == null){
+      return;
+}
+if(anterior == null){
+    cabeza = actual.getSiguiente();
+}
+
+else{
+   anterior.setSiguiente(actual.getSiguiente());
+   }
+    
+
+}
+public boolean buscar(int valor){
+        Nodo actual = cabeza;
+        while(actual != null){
+            if(actual.getDato() == valor){
+                return true;
+            }
+            actual = actual.getSiguiente();
+        }
+        return false;
+}
+public void recorrer(){
+    Nodo actual = cabeza;
+    while(actual != null){
+        System.out.println(actual.getDato() + "->");
+            actual.getSiguiente();
+        }
+        System.out.println("Null");
+        
+        
+        
+}
+    }
+
+
+
+
+
+
+
+
+
+package lec08;
+
+/**
+ *
+ * @author sebas 
+ */
+public class Lec08 {
+
+
+    public static void main(String[] args) {
+       Lista lista = new Lista(); 
+        
+        lista.insertarInicio(10);
+      lista.insertarInicio(20);
+        lista.insertarInicio(30);
+        
+        System.out.println("Lista depues de inserciones");
+        lista.recorrer();
+        
+        lista.eliminar(20);
+        System.out.print("Lista despues de eliminar");
+        lista.recorrer();
+        
+        System.out.print("Buscar 10 en lista" + lista.buscar(10));
+        System.out.print("Buscar 40 en lista" + lista.buscar(40));
+        
+        
