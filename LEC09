@@ -1,0 +1,458 @@
+//LISTA CIRCULAR//
+
+package ListaCircular;
+
+/**
+ *
+ * @author sebas
+ */
+public class ListaCircular {
+    private Nodo cabeza;
+    private Nodo ultimo;
+    
+    public ListaCircular(){
+        this.cabeza = null;
+        this.ultimo = null;
+    }
+    
+    public void insertar(int valor){
+        Nodo nuevo = new Nodo(valor);
+        if (cabeza == null){
+            cabeza = nuevo;
+            ultimo = nuevo;
+            
+        }else{
+            nuevo.setSiguiente(cabeza);
+            ultimo.setSiguiente(nuevo);
+            ultimo = nuevo;
+        }
+            
+        
+    }
+    
+    public void recorrer (){
+        if(cabeza == null){
+            System.out.print("Lista Vacia");
+            return;
+        }
+        Nodo actual = cabeza;
+        do {
+            System.out.print(actual.getDato() + " -");
+            actual = actual.getSiguiente();
+            
+        }while (actual != cabeza);
+        System.out.print("cabeza");
+    }
+    
+    public void insertarOrdenado(int valor){
+        Nodo nuevo = new Nodo (valor);
+        if(cabeza == null){
+            cabeza = nuevo;
+            ultimo = nuevo;
+            
+        }else if (valor < cabeza.getDato()){
+            nuevo.setSiguiente(cabeza);
+        
+    }
+    }
+}
+
+
+
+
+//NODO LISTA CIRCULAR//
+
+package ListaCircular;
+
+public class Nodo {
+    private int dato;
+    private Nodo siguiente;
+    
+    public Nodo (int dato){
+        this.dato = dato;
+        this.siguiente = null;
+    }
+
+    public int getDato() {
+        return dato;
+    }
+
+    public void setDato(int dato) {
+        this.dato = dato;
+    }
+
+    public Nodo getSiguiente() {
+        return siguiente;
+    }
+
+    public void setSiguiente(Nodo siguiente) {
+        this.siguiente = siguiente;
+    }
+    
+}
+
+
+
+
+/LISTA DOBLE CIRCULAR// 
+
+
+package ListaDoble;
+
+
+
+/**
+ *
+ * @author sebas
+ */
+
+
+/*public NodoDoble(int dato) {
+this.dato = dato;
+this.siguiente = null;
+this.anterior = null;
+}*/
+/*}*/
+
+public class ListaDoble {
+    private NodoDoble cabeza;
+    private NodoDoble ultimo;
+
+    public ListaDobleCircular() {
+        this.cabeza = null;
+        this.ultimo = null;
+    }
+
+    // a) size()
+    public int size() {
+        if (esVacia()) return 0;
+        int count = 1;
+        NodoDoble actual = cabeza.siguiente;
+        while (actual != cabeza) {
+            count++;
+            actual = actual.siguiente;
+        }
+        return count;
+    }
+
+    // b) esVacia()
+    public boolean esVacia() {
+        return cabeza == null;
+    }
+
+    // c) existe(valor)
+    public boolean existe(int valor) {
+        if (esVacia()) return false;
+        NodoDoble actual = cabeza;
+        do {
+            if (actual.dato == valor) return true;
+            actual = actual.siguiente;
+        } while (actual != cabeza);
+        return false;
+    }
+
+    // d) valorEn(índice)
+    public int valorEn(int indice) {
+        if (indice < 0) throw new IndexOutOfBoundsException();
+        NodoDoble actual = cabeza;
+        for (int i = 0; i < indice; i++) {
+            actual = actual.siguiente;
+            if (actual == cabeza) throw new IndexOutOfBoundsException();
+        }
+        return actual.dato;
+    }
+
+    // e) insertarAlFrente(valor)
+    public void insertarAlFrente(int valor) {
+        NodoDoble nuevo = new NodoDoble(valor);
+        if (esVacia()) {
+            cabeza = nuevo;
+            ultimo = nuevo;
+            nuevo.siguiente = nuevo;
+            nuevo.anterior = nuevo;
+        } else {
+            nuevo.siguiente = cabeza;
+            nuevo.anterior = ultimo;
+            cabeza.anterior = nuevo;
+            ultimo.siguiente = nuevo;
+            cabeza = nuevo;
+        }
+    }
+
+    // f) insertarAlFinal(valor)
+    public void insertarAlFinal(int valor) {
+        NodoDoble nuevo = new NodoDoble(valor);
+        if (esVacia()) {
+            cabeza = nuevo;
+            ultimo = nuevo;
+            nuevo.siguiente = nuevo;
+            nuevo.anterior = nuevo;
+        } else {
+            nuevo.siguiente = cabeza;
+            nuevo.anterior = ultimo;
+            ultimo.siguiente = nuevo;
+            cabeza.anterior = nuevo;
+            ultimo = nuevo;
+        }
+    }
+
+    // g) removerFrente()
+    public int removerFrente() {
+        if (esVacia()) throw new RuntimeException("Lista vacía");
+        int valor = cabeza.dato;
+        if (cabeza == ultimo) {
+            cabeza = null;
+            ultimo = null;
+        } else {
+            NodoDoble temp = cabeza;
+            cabeza = cabeza.siguiente;
+            cabeza.anterior = ultimo;
+            ultimo.siguiente = cabeza;
+            temp.siguiente = null;
+            temp.anterior = null;
+        }
+        return valor;
+    }
+
+    // h) removerFinal()
+    public int removerFinal() {
+        if (esVacia()) throw new RuntimeException("Lista vacía");
+        int valor = ultimo.dato;
+        if (cabeza == ultimo) {
+            cabeza = null;
+            ultimo = null;
+        } else {
+            NodoDoble temp = ultimo;
+            ultimo = ultimo.anterior;
+            ultimo.siguiente = cabeza;
+            cabeza.anterior = ultimo;
+            temp.siguiente = null;
+            temp.anterior = null;
+        }
+        return valor;
+    }
+
+    // i) removerValor(valor)
+    public void removerValor(int valor) {
+        if (esVacia()) return;
+        NodoDoble actual = cabeza;
+        do {
+            if (actual.dato == valor) {
+                if (actual == cabeza) {
+                    removerFrente();
+                } else if (actual == ultimo) {
+                    removerFinal();
+                } else {
+                    actual.anterior.siguiente = actual.siguiente;
+                    actual.siguiente.anterior = actual.anterior;
+                }
+                return;
+            }
+            actual = actual.siguiente;
+        } while (actual != cabeza);
+    }
+
+    // j) eliminar(índice)
+    public void eliminar(int indice) {
+        if (indice < 0 || esVacia()) throw new IndexOutOfBoundsException();
+        NodoDoble actual = cabeza;
+        for (int i = 0; i < indice; i++) {
+            actual = actual.siguiente;
+            if (actual == cabeza) throw new IndexOutOfBoundsException();
+        }
+        if (actual == cabeza) {
+            removerFrente();
+        } else if (actual == ultimo) {
+            removerFinal();
+        } else {
+            actual.anterior.siguiente = actual.siguiente;
+            actual.siguiente.anterior = actual.anterior;
+        }
+    }
+
+    // k) frente()
+    public int frente() {
+        if (esVacia()) throw new RuntimeException("Lista vacía");
+        return cabeza.dato;
+    }
+
+    // l) atrás()
+    public int atras() {
+        if (esVacia()) throw new RuntimeException("Lista vacía");
+        return ultimo.dato;
+    }
+
+    // m) insertar(índice, valor)
+    public void insertar(int indice, int valor) {
+        if (indice < 0) throw new IndexOutOfBoundsException();
+        if (indice == 0) {
+            insertarAlFrente(valor);
+            return;
+        }
+        if (indice == size()) {
+            insertarAlFinal(valor);
+            return;
+        }
+        NodoDoble nuevo = new NodoDoble(valor);
+        NodoDoble actual = cabeza;
+        for (int i = 0; i < indice; i++) {
+            actual = actual.siguiente;
+            if (actual == cabeza) throw new IndexOutOfBoundsException();
+        }
+        nuevo.siguiente = actual;
+        nuevo.anterior = actual.anterior;
+        actual.anterior.siguiente = nuevo;
+        actual.anterior = nuevo;
+    }
+
+    // n) reversar()
+    public void reversar() {
+        if (esVacia() || size() == 1) return;
+        NodoDoble actual = cabeza;
+        NodoDoble temp;
+        do {
+            temp = actual.siguiente;
+            actual.siguiente = actual.anterior;
+            actual.anterior = temp;
+            actual = temp;
+        } while (actual != cabeza);
+        temp = cabeza;
+        cabeza = ultimo;
+        ultimo = temp;
+    }
+}
+
+
+
+//NODO DOBLE//
+
+package ListaDoble;
+
+/**
+ *
+ * @author sebas
+ */
+public class NodoDoble {
+
+    int dato;
+    NodoDoble siguiente;
+    NodoDoble anterior;
+
+    NodoDoble(int valor) {
+        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+    }
+
+    public int getDato() {
+        return dato;
+    }
+
+    public void setDato(int dato) {
+        this.dato = dato;
+    }
+
+    public NodoDoble getSiguiente() {
+        return siguiente;
+    }
+
+    public void setSiguiente(NodoDoble siguiente) {
+        this.siguiente = siguiente;
+    }
+
+    public NodoDoble getAnterior() {
+        return anterior;
+    }
+
+    public void setAnterior(NodoDoble anterior) {
+        this.anterior = anterior;
+    }
+}
+
+
+
+
+//LISTA DOBLE CIRCULAR//
+
+package ListaDobleCircular;
+
+/**
+ *
+ * @author sebas
+ */
+public class ListaDobleCircular {
+    private Nodo cabeza;
+    private Nodo ultimo;
+    
+    public void insertar (int valor){
+        Nodo nuevo = new Nodo(valor);
+        if(cabeza == null){
+            cabeza = nuevo;
+        }else{
+            Nodo ultimo = cabeza.getAnterior();
+            nuevo.setSieguiente(cabeza);
+            nuevo.setAnterior(nuevo);
+            cabeza.setAnterior(nuevo);
+            ultimo.setSieguiente(nuevo);
+        }
+        
+    }
+    public void mostrarAdelante(){
+        if(cabeza == null){
+            return;
+        }
+        Nodo actual = cabeza;
+        do{
+            System.out.print(actual.getDato() + "<->");
+            actual = actual.getSieguiente();
+        }while (actual != cabeza);
+        System.out.print("circular");
+        
+    }
+    
+}
+
+
+
+//NODO LISTA DOBLE CIRCULAR//
+
+package ListaDobleCircular;
+
+/**
+ *
+ * @author sebas
+ */
+public class Nodo {
+    private int dato;
+    private Nodo siguiente;
+    private Nodo anterior;
+    
+    public Nodo(int dato){
+        this.dato = dato;
+        this.anterior = null;
+        this.siguiente = null;
+    }
+
+    public int getDato() {
+        return dato;
+    }
+
+    public void setDato(int dato) {
+        this.dato = dato;
+    }
+
+    public Nodo getSieguiente() {
+        return siguiente;
+    }
+
+    public void setSieguiente(Nodo sieguiente) {
+        this.siguiente = sieguiente;
+    }
+
+    public Nodo getAnterior() {
+        return anterior;
+    }
+
+    public void setAnterior(Nodo anterior) {
+        this.anterior = anterior;
+    }
+    
+}
