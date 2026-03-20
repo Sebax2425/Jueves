@@ -1,0 +1,120 @@
+package com.sc303.lec10;
+
+/**
+ *
+ * @author Laboratorios
+ */
+public class Arbol {
+    private Nodo raiz;
+    
+    public void insertar(int valor){
+        raiz = insertarRec(raiz, valor);
+    }
+    
+    private Nodo insertarRec(Nodo raiz, int valor){
+        if(raiz == null){
+            return new Nodo(valor);
+        }
+        if(valor <= raiz.getDato()){
+            raiz.setIzquierda(insertarRec(raiz.getIzquierda(), valor));
+        } else {
+            raiz.setDerecha(insertarRec(raiz.getDerecha(), valor));
+        }
+        return raiz;
+    }
+    
+    public void inorden(){
+        inordenRec(raiz);
+    }
+    
+    private void inordenRec(Nodo raiz){
+        if(raiz != null){
+            inordenRec(raiz.getIzquierda());
+            System.out.println(raiz.getDato() + " ");
+            inordenRec(raiz.getDerecha());
+        }
+    }
+    
+    
+}
+
+
+
+
+
+
+NODO 
+
+
+package com.sc303.lec10;
+
+/**
+ *
+ * @author Laboratorios
+ */
+public class Nodo {
+    private int dato;
+    private Nodo izquierda;
+    private Nodo derecha;
+    
+    public Nodo(int dato){
+        this.dato =dato;
+        this.izquierda = null;
+        this.derecha = null;
+    }
+
+    public int getDato() {
+        return dato;
+    }
+
+    public void setDato(int dato) {
+        this.dato = dato;
+    }
+
+    public Nodo getIzquierda() {
+        return izquierda;
+    }
+
+    public void setIzquierda(Nodo izquierda) {
+        this.izquierda = izquierda;
+    }
+
+    public Nodo getDerecha() {
+        return derecha;
+    }
+
+    public void setDerecha(Nodo derecha) {
+        this.derecha = derecha;
+    }
+    
+    
+}
+
+
+
+LEC10
+
+
+package com.sc303.lec10;
+
+/**
+ *
+ * @author Laboratorios
+ */
+public class Lec10 {
+
+    public static void main(String[] args) {
+        Arbol arbol = new Arbol();
+        
+        arbol.insertar(50);
+        arbol.insertar(30);
+        arbol.insertar(70);
+        arbol.insertar(20);
+        arbol.insertar(40);
+        arbol.insertar(60);
+        arbol.insertar(80);
+        
+        System.out.println("recorrido inorden");
+        arbol.inorden();
+    }
+}
