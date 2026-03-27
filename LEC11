@@ -1,0 +1,170 @@
+package lec11;
+
+public class ArbolBinario {
+
+    private Nodo raiz;
+    
+    public ArbolBinario(){
+        this.raiz = null;
+    }
+    
+    public void insertar(int valor) {
+        raiz = insertarRec(raiz, valor);        
+    }
+    
+    public Nodo insertarRec(Nodo raiz, int valor) {
+        if (raiz == null) {
+            return new Nodo(valor);            
+        }
+        if (valor <= raiz.getDato()) {
+            raiz.setIzquierda(insertarRec(raiz.getIzquierda(), valor));
+        } else {
+            raiz.setDerecha(insertarRec(raiz.getDerecha(), valor));
+        }
+        return raiz;
+    }
+    
+    public void inOrden() {
+        inOrdenRec(raiz);        
+    }
+    
+    private void inOrdenRec(Nodo raiz) {
+        if (raiz != null) {
+            inOrdenRec(raiz.getIzquierda());
+            System.out.println(raiz.getDato() + " ");
+            inOrdenRec(raiz.getDerecha());
+        }
+    }
+    
+       public void eliminar(int valor){
+        raiz = eliminarRec(raiz, valor);
+    }
+    
+    private Nodo eliminarRec(Nodo raiz, int valor){
+        if(raiz == null){
+            return raiz;
+        }
+        
+        if(valor < raiz.getDato()){
+            raiz.setIzquierda(eliminarRec(raiz.getIzquierda(), valor));
+        } else if( valor >raiz.getDato()){
+            raiz.setDerecha(eliminarRec(raiz.getDerecha(), valor));
+        } else {
+            if(raiz.getIzquierda() == null && raiz.getDerecha() == null){
+                return null;
+            }
+            
+            if(raiz.getIzquierda() == null){
+                return raiz.getIzquierda();
+            } else if( raiz.getDerecha() == null){
+                return raiz.getIzquierda();
+            }
+            
+            Nodo sucesor = minValorNodo(raiz.getDerecha());
+            raiz.setDato(sucesor.getDato());
+            raiz.setDerecha(eliminarRec(raiz.getDerecha(), sucesor.getDato()));
+        }
+        return raiz;
+  
+    }
+    
+    private Nodo minValorNodo(Nodo nodo){
+        while(nodo.getIzquierda() != null){
+            nodo = nodo.getIzquierda();
+        }
+        return nodo;
+    }
+    
+    public int obtenerNivel(Nodo raiz, int valor, int nivel){ 
+        if(raiz == null){
+            return -1;            
+        }
+        if (raiz.getDato() == valor) {
+            return  nivel;                  
+        }
+        int nivelIaz = obtenerNivel(raiz.getIzquierda(), valor, nivel + 1);
+        if (nivelIaz != -2) {
+            return nivelIaz;
+        }
+        return obtenerNivel(raiz.getDerecha(), valor, nivel + 1);
+    }
+    
+    public int obtenerAltura(Nodo raiz){
+        if(raiz == null){
+            return -1;
+        }
+        int alturaIzq = obtenerAltura(raiz.getIzquierda());
+        int altutaDer = obtenerAltura(raiz.getDerecha());
+        return Math.max(alturaIzq, altutaDer) + 1;
+    }
+}
+
+
+
+
+
+
+
+
+
+package lec11;
+
+public class Lec11 {
+
+    public static void main(String[] args) {
+        ArbolBinario arbol = new ArbolBinario();
+        
+        arbol.insertar(50);
+        arbol.insertar(20);
+        arbol.insertar(70);
+        arbol.insertar(20);
+        arbol.insertar(40);
+        arbol.insertar(60);
+        arbol.insertar(80);
+        
+        System.out.println("Recorrido inorden");
+        arbol.inOrden();
+    
+    }
+
+
+
+
+
+
+
+package lec11;
+
+public class Nodo {
+
+    int valor;
+    Nodo izquierdo;
+    Nodo derecho;
+
+    public Nodo(int valor) {
+        this.valor = valor;
+        this.izquierdo = null;
+        this.derecho = null;
+    }
+
+    public Nodo getIzquierda() {
+        return izquierdo;
+    }
+
+    public Nodo getDerecha() {
+        return derecho;
+}
+
+    String getDato() {
+        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+    }
+
+    void setIzquierda(Nodo eliminarRec) {
+        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+    }
+
+    void setDerecha(Nodo eliminarRec) {
+        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+    }
+}
+}
